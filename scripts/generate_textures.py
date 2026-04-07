@@ -10,12 +10,14 @@ Each PNG uses face-specific painting:
   • Body dorsal vs belly have distinct colours
   • All solid areas show a 4-pixel fish-scale tile pattern (highlight / base / shadow)
   • Wing membranes have radiating diagonal veins
-  • Head north face carries a stylised eye detail
+  • Head front (north) face has full face detail:
+      – brow-ridge highlight, two separated 2×2 slit eyes (L + R), nostril dots,
+        jaw-line shadow, and ivory fang tips on the jaw's front face
   • Horns have a base-to-tip gradient
   • Rare/elite/molten/void variants add crack/vein overlays
 
 UV layout strictly follows the Bedrock box-UV convention so every region
-maps cleanly with zero pixel overlap (same as the original allocation).
+maps cleanly with zero pixel overlap.
 
 Usage:  python3 scripts/generate_textures.py
 """
@@ -148,15 +150,126 @@ def draw_horn(px, u, v, w, h, base, tip):
         for ppx in range(w):
             put(px, u+ppx, v+py, c)
 
-# ─── Eye detail ───────────────────────────────────────────────────────────────
+# ─── Detailed face painters ───────────────────────────────────────────────────
 
-def draw_eye(px, cx, cy, iris):
-    """3×3 stylised slit eye."""
-    sclera = lighten(iris, 60)
-    put(px, cx-1, cy, sclera)
-    put(px, cx,   cy, (0, 0, 0))      # pupil
-    put(px, cx+1, cy, sclera)
-    put(px, cx,   cy-1, iris)
+def _eye_2x2(px, u, v, iris, pupil_left=True):
+    """Paint a 2×2 slit eye at (u,v).
+    Layout:  sclera | glint          (top row)
+             iris   | pupil/black    (bottom row, pupil_left=True)
+    Mirror by setting pupil_left=False for the right eye.
+    """
+    sclera = (min(255, iris[0]+100), min(255, iris[1]+100), min(255, iris[2]+100))
+    glint  = (255, 255, 255)
+    black  = (0, 0, 0)
+    if pupil_left:
+        put(px, u,   v,   sclera);  put(px, u+1, v,   glint)
+        put(px, u,   v+1, black);   put(px, u+1, v+1, iris)
+    else:
+        put(px, u,   v,   glint);   put(px, u+1, v,   sclera)
+        put(px, u,   v+1, iris);    put(px, u+1, v+1, black)
+
+def draw_drake_face(px, nu, nv, nw, nh, p):
+    """Overlay premium face features on the drake head's north (front) face.
+
+    Assumes the face has already been painted with scales.  Works for an 8×8
+    region (nw=8, nh=8).  Adds:
+      • brow-ridge highlight across the top row
+      • two separate 2×2 slit eyes (left third / right third of face)
+      • nostril dots on the lower half of the face
+      • jaw-line shadow on the bottom row
+    """
+    eye_c   = p['eye']
+    head_c  = p['head_top']
+    head_s  = p['head_side']
+    nostril = darken(head_s, 55)
+
+    # Brow highlight (top row)
+    brow = lighten(head_c, 30)
+    for col in range(nw):
+        put(px, nu+col, nv, brow)
+
+    # Brow shadow (row 1)
+    for col in range(nw):
+        put(px, nu+col, nv+1, darken(head_c, 8))
+
+    # Left eye — cols 1-2, rows 2-3
+    _eye_2x2(px, nu+1, nv+2, eye_c, pupil_left=True)
+
+    # Right eye — cols 5-6, rows 2-3 (mirrored)
+    _eye_2x2(px, nu+5, nv+2, eye_c, pupil_left=False)
+
+    # Cheek shadow (row 4)
+    for col in range(nw):
+        r, g, b, _ = px[nv+4][nu+col]
+        put(px, nu+col, nv+4, darken((r,g,b), 12))
+
+    # Nostril dots (row 5, cols 2 and 5)
+    if nh > 5:
+        put(px, nu+2, nv+5, nostril)
+        put(px, nu+5, nv+5, nostril)
+
+    # Jaw-line shadow (bottom row)
+    for col in range(nw):
+        r, g, b, _ = px[nv+nh-1][nu+col]
+        put(px, nu+col, nv+nh-1, darken((r,g,b), 22))
+
+def draw_jaw_teeth(px, nu, nv, nw, nh, p):
+    """Paint ivory fang tips on the bottom row of the jaw's north face.
+
+    Fangs appear at alternating columns; the row above shows the fang body
+    blended between jaw colour and ivory.
+    """
+    jaw_c    = p['jaw_in']
+    ivory    = (228, 218, 190)  # bone/tooth colour independent of variant
+
+    bottom = nv + nh - 1
+    for col in (1, 3, 5):
+        if nu + col < SIZE:
+            put(px, nu+col, bottom, ivory)
+            if nh >= 2:
+                put(px, nu+col, bottom-1, blend(jaw_c, ivory, 0.45))
+
+def draw_wyvern_face(px, nu, nv, nw, nh, p):
+    """Overlay premium face features on the wyvern head's north (front) face.
+
+    Works for a 6×6 region (nw=6, nh=6).  Adds:
+      • brow-ridge highlight (top row)
+      • two 2×2 slit eyes in the upper half
+      • nostril dots in the lower half
+      • jaw-line shadow on the bottom row
+    """
+    eye_c   = p['eye']
+    head_c  = p['head_top']
+    head_s  = p['head_side']
+    nostril = darken(head_s, 55)
+
+    # Brow highlight
+    brow = lighten(head_c, 30)
+    for col in range(nw):
+        put(px, nu+col, nv, brow)
+
+    # Left eye — cols 1-2, rows 1-2
+    _eye_2x2(px, nu+1, nv+1, eye_c, pupil_left=True)
+
+    # Right eye — cols 3-4, rows 1-2 (mirrored)
+    _eye_2x2(px, nu+3, nv+1, eye_c, pupil_left=False)
+
+    # Nostril dots (row 4, cols 1 and 4)
+    if nh > 4:
+        put(px, nu+1, nv+4, nostril)
+        put(px, nu+4, nv+4, nostril)
+
+    # Jaw-line shadow (bottom row)
+    for col in range(nw):
+        r, g, b, _ = px[nv+nh-1][nu+col]
+        put(px, nu+col, nv+nh-1, darken((r,g,b), 22))
+
+def draw_snout_nostrils(px, nu, nv, nw, nh, p):
+    """Paint two nostril dots on the wyvern snout's north face (3×2)."""
+    nostril = darken(p['snout'], 55)
+    if nh >= 2:
+        put(px, nu,       nv+nh-1, nostril)
+        put(px, nu+nw-1,  nv+nh-1, nostril)
 
 # ─── Crack / energy vein overlay ─────────────────────────────────────────────
 
@@ -476,9 +589,8 @@ def paint_drake(px, p):
     draw_gradient_scales(px, *f['north'],  p['head_top'], p['head_side'])  # front
     draw_gradient_scales(px, *f['west'],   p['head_top'], p['head_side'])
     draw_scales(px,          *f['south'],  p['head_top'])
-    # Eye on front (north) face
-    nu, nv, nw, nh = f['north']
-    draw_eye(px, nu + nw//2, nv + nh//2, p['eye'])
+    # Detailed face on the front (north) face
+    draw_drake_face(px, *f['north'], p)
 
     # ── Jaw (8,3,8) at UV(64,18) ──────────────────────────────────────────────
     f = faces(64, 18, 8, 3, 8)
@@ -486,6 +598,8 @@ def paint_drake(px, p):
     fill(px,        *f['bottom'], lighten(p['jaw_in'], 22))
     for side in ('east', 'north', 'west', 'south'):
         draw_scales(px, *f[side], p['jaw_in'])
+    # Fang tips on the front of the jaw
+    draw_jaw_teeth(px, *f['north'], p)
 
     # ── Horns (2,6,2) at UV(64,29) and UV(72,29) ──────────────────────────────
     for u0 in (64, 72):
@@ -582,14 +696,15 @@ def paint_wyvern(px, p):
     draw_gradient_scales(px, *f['north'],  p['head_top'], p['head_side'])  # front
     draw_gradient_scales(px, *f['west'],   p['head_top'], p['head_side'])
     draw_scales(px,          *f['south'],  p['head_top'])
-    # Eye on front (north) face
-    nu, nv, nw, nh = f['north']
-    draw_eye(px, nu + nw//2, nv + nh//2, p['eye'])
+    # Detailed face on the front (north) face
+    draw_wyvern_face(px, *f['north'], p)
 
     # ── Snout (3,2,5) at UV(28,48) ────────────────────────────────────────────
     f = faces(28, 48, 3, 2, 5)
     for r in f.values():
         draw_scales(px, *r, p['snout'])
+    # Nostril dots on the snout front face
+    draw_snout_nostrils(px, *f['north'], p)
 
     # ── Back legs: upper (4,10,4) at (0,64), lower (3,6,3) at (16,64) ────────
     for u0, v0, W, H, D in [(0,64,4,10,4),(16,64,3,6,3)]:
@@ -657,9 +772,12 @@ if __name__ == "__main__":
         paint_wyvern(cvs, pal)
         write_png(str(base / f"frost_wyvern_{variant}.png"), cvs)
 
-    # Keep legacy filenames → common variant (backward compat)
+    # Remove legacy alias PNGs if they still exist from a previous run
     import shutil
-    shutil.copy(base / "infernal_drake_common.png", base / "infernal_drake.png")
-    shutil.copy(base / "frost_wyvern_common.png",   base / "frost_wyvern.png")
+    for legacy in ("infernal_drake.png", "frost_wyvern.png"):
+        p = base / legacy
+        if p.exists():
+            p.unlink()
+            print(f"  Removed legacy alias: {p}")
 
     print("Done! All 10 variant textures generated.")
