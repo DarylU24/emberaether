@@ -154,9 +154,9 @@ def draw_horn(px, u, v, w, h, base, tip):
 
 def _eye_2x2(px, u, v, iris, pupil_left=True):
     """Paint a 2×2 slit eye at (u,v).
-    Layout:  sclera | glint          (top row)
-             iris   | pupil/black    (bottom row, pupil_left=True)
-    Mirror by setting pupil_left=False for the right eye.
+
+    pupil_left=True  (left eye):   sclera | glint   /  black | iris
+    pupil_left=False (right eye):  glint  | sclera  /  iris  | black
     """
     sclera = (min(255, iris[0]+100), min(255, iris[1]+100), min(255, iris[2]+100))
     glint  = (255, 255, 255)
