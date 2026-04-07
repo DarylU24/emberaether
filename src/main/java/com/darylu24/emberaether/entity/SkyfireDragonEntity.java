@@ -3,11 +3,10 @@ package com.darylu24.emberaether.entity;
 import com.darylu24.emberaether.registry.ModEntities;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -73,10 +72,5 @@ public class SkyfireDragonEntity extends AbstractDragonEntity {
         }
         baby.setVariantIndex(index);
         return baby;
-    }
-
-    @Override
-    public Vector3d getRiddenInput(PlayerEntity player, Vector3d travelVector) {
-        return new Vector3d(player.xxa * 0.5F, travelVector.y, player.zza);
     }
 }
