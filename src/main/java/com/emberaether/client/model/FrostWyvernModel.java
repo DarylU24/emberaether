@@ -14,7 +14,14 @@ public class FrostWyvernModel extends GeoModel<FrostWyvernEntity> {
 
     @Override
     public ResourceLocation getTextureResource(FrostWyvernEntity animatable) {
-        return new ResourceLocation(EmberAether.MOD_ID, "textures/entity/frost_wyvern.png");
+        String name = switch (animatable.getVariant()) {
+            case FrostWyvernEntity.VARIANT_RARE     -> "frost_wyvern_rare";
+            case FrostWyvernEntity.VARIANT_ELITE    -> "frost_wyvern_elite";
+            case FrostWyvernEntity.VARIANT_BLIZZARD -> "frost_wyvern_blizzard";
+            case FrostWyvernEntity.VARIANT_STORM    -> "frost_wyvern_storm";
+            default                                  -> "frost_wyvern_common";
+        };
+        return new ResourceLocation(EmberAether.MOD_ID, "textures/entity/" + name + ".png");
     }
 
     @Override

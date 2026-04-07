@@ -1,7 +1,19 @@
 {
-  "emberaether.entity.infernal_drake": "Infernal Drake",
-  "emberaether.entity.frost_wyvern": "Frost Wyvern",
-  "emberaether.entity.dragon_egg_entity": "Dragon Egg",
+  "entity.emberaether.infernal_drake": "Infernal Drake",
+  "entity.emberaether.frost_wyvern": "Frost Wyvern",
+  "entity.emberaether.dragon_egg_entity": "Dragon Egg",
   "item.emberaether.dragon_saddle": "Dragon Saddle",
-  "itemGroup.emberaether.main": "EmberAether"
+  "itemGroup.emberaether.main": "EmberAether",
+
+  "emberaether.variant.drake.common":  "Common Infernal Drake",
+  "emberaether.variant.drake.rare":    "Rare Infernal Drake",
+  "emberaether.variant.drake.elite":   "Elite Infernal Drake",
+  "emberaether.variant.drake.molten":  "Molten Infernal Drake",
+  "emberaether.variant.drake.void":    "Void Infernal Drake",
+
+  "emberaether.variant.wyvern.common":   "Common Frost Wyvern",
+  "emberaether.variant.wyvern.rare":     "Rare Frost Wyvern",
+  "emberaether.variant.wyvern.elite":    "Elite Frost Wyvern",
+  "emberaether.variant.wyvern.blizzard": "Blizzard Frost Wyvern",
+  "emberaether.variant.wyvern.storm":    "Storm Frost Wyvern"
 }

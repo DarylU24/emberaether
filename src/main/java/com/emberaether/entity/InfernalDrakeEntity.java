@@ -34,6 +34,9 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -42,8 +45,18 @@ import java.util.List;
  * Biome: Nether Wastes / Basalt Deltas.
  * Attack: short-range fire cone (AoE), applies Fire for 5 seconds.
  * Tamed via "Dominance": reduce to 20% HP then feed Cooked Beef.
+ *
+ * <p>Variants (byte 0-4): 0=common, 1=rare, 2=elite, 3=molten, 4=void.
+ * Assigned randomly on spawn (weights: 50/25/10/7.5/7.5 %).
  */
 public class InfernalDrakeEntity extends TamableAnimal implements GeoEntity {
+
+    // ─── Variant constants ─────────────────────────────────────────────────────
+    public static final byte VARIANT_COMMON = 0;
+    public static final byte VARIANT_RARE   = 1;
+    public static final byte VARIANT_ELITE  = 2;
+    public static final byte VARIANT_MOLTEN = 3;
+    public static final byte VARIANT_VOID   = 4;
 
     // ─── Data parameters ───────────────────────────────────────────────────────
     private static final EntityDataAccessor<Boolean> ROARING =
@@ -54,6 +67,8 @@ public class InfernalDrakeEntity extends TamableAnimal implements GeoEntity {
             SynchedEntityData.defineId(InfernalDrakeEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> STAMINA =
             SynchedEntityData.defineId(InfernalDrakeEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Byte> VARIANT =
+            SynchedEntityData.defineId(InfernalDrakeEntity.class, EntityDataSerializers.BYTE);
 
     // ─── GeckoLib ──────────────────────────────────────────────────────────────
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -88,17 +103,20 @@ public class InfernalDrakeEntity extends TamableAnimal implements GeoEntity {
         entityData.define(BREATHING_FIRE, false);
         entityData.define(SADDLED, false);
         entityData.define(STAMINA, 100.0f);
+        entityData.define(VARIANT, VARIANT_COMMON);
     }
 
     public boolean isRoaring()      { return entityData.get(ROARING); }
     public boolean isBreathingFire(){ return entityData.get(BREATHING_FIRE); }
     public boolean isSaddled()      { return entityData.get(SADDLED); }
     public float   getStamina()     { return entityData.get(STAMINA); }
+    public byte    getVariant()     { return entityData.get(VARIANT); }
 
     public void setRoaring(boolean v)      { entityData.set(ROARING, v); }
     public void setBreathingFire(boolean v){ entityData.set(BREATHING_FIRE, v); }
     public void setSaddled(boolean v)      { entityData.set(SADDLED, v); }
     public void setStamina(float v)        { entityData.set(STAMINA, Math.max(0, Math.min(100, v))); }
+    public void setVariant(byte v)         { entityData.set(VARIANT, v); }
 
     // ─── NBT ───────────────────────────────────────────────────────────────────
     @Override
@@ -106,6 +124,7 @@ public class InfernalDrakeEntity extends TamableAnimal implements GeoEntity {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Saddled", isSaddled());
         tag.putFloat("Stamina", getStamina());
+        tag.putByte("DrakeVariant", getVariant());
     }
 
     @Override
@@ -113,6 +132,24 @@ public class InfernalDrakeEntity extends TamableAnimal implements GeoEntity {
         super.readAdditionalSaveData(tag);
         setSaddled(tag.getBoolean("Saddled"));
         setStamina(tag.getFloat("Stamina"));
+        setVariant(tag.getByte("DrakeVariant"));
+    }
+
+    // ─── Random variant on first spawn ─────────────────────────────────────────
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnData,
+                                        @Nullable CompoundTag dataTag) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnData, dataTag);
+        float roll = random.nextFloat();
+        byte variant;
+        if      (roll < 0.075f) variant = VARIANT_VOID;
+        else if (roll < 0.15f)  variant = VARIANT_MOLTEN;
+        else if (roll < 0.25f)  variant = VARIANT_ELITE;
+        else if (roll < 0.50f)  variant = VARIANT_RARE;
+        else                    variant = VARIANT_COMMON;
+        setVariant(variant);
+        return data;
     }
 
     // ─── Goals ─────────────────────────────────────────────────────────────────

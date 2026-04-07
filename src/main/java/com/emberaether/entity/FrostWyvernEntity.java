@@ -29,6 +29,11 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.level.ServerLevelAccessor;
+
 import javax.annotation.Nullable;
 
 /**
@@ -36,8 +41,18 @@ import javax.annotation.Nullable;
  * Biome: Snowy Tundra / Snowy Mountains.
  * Passive-Neutral: circles players, retaliates with Ice Projectile (Slowness IV, 3 sec).
  * Tamed via stealth: sneak + feed Raw Cod/Salmon while perched.
+ *
+ * <p>Variants (byte 0-4): 0=common, 1=rare, 2=elite, 3=blizzard, 4=storm.
+ * Assigned randomly on spawn (weights: 50/25/10/7.5/7.5 %).
  */
 public class FrostWyvernEntity extends TamableAnimal implements GeoEntity {
+
+    // ─── Variant constants ─────────────────────────────────────────────────────
+    public static final byte VARIANT_COMMON   = 0;
+    public static final byte VARIANT_RARE     = 1;
+    public static final byte VARIANT_ELITE    = 2;
+    public static final byte VARIANT_BLIZZARD = 3;
+    public static final byte VARIANT_STORM    = 4;
 
     // ─── Data parameters ───────────────────────────────────────────────────────
     private static final EntityDataAccessor<Boolean> ICE_BREATHING =
@@ -48,6 +63,8 @@ public class FrostWyvernEntity extends TamableAnimal implements GeoEntity {
             SynchedEntityData.defineId(FrostWyvernEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> RETREATING =
             SynchedEntityData.defineId(FrostWyvernEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Byte> VARIANT =
+            SynchedEntityData.defineId(FrostWyvernEntity.class, EntityDataSerializers.BYTE);
 
     // ─── GeckoLib ──────────────────────────────────────────────────────────────
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -84,17 +101,20 @@ public class FrostWyvernEntity extends TamableAnimal implements GeoEntity {
         entityData.define(SADDLED, false);
         entityData.define(STAMINA, 100.0f);
         entityData.define(RETREATING, false);
+        entityData.define(VARIANT, VARIANT_COMMON);
     }
 
     public boolean isIceBreathing() { return entityData.get(ICE_BREATHING); }
     public boolean isSaddled()      { return entityData.get(SADDLED); }
     public float   getStamina()     { return entityData.get(STAMINA); }
     public boolean isRetreating()   { return entityData.get(RETREATING); }
+    public byte    getVariant()     { return entityData.get(VARIANT); }
 
     public void setIceBreathing(boolean v){ entityData.set(ICE_BREATHING, v); }
     public void setSaddled(boolean v)     { entityData.set(SADDLED, v); }
     public void setStamina(float v)       { entityData.set(STAMINA, Math.max(0, Math.min(100, v))); }
     public void setRetreating(boolean v)  { entityData.set(RETREATING, v); }
+    public void setVariant(byte v)        { entityData.set(VARIANT, v); }
 
     // ─── NBT ───────────────────────────────────────────────────────────────────
     @Override
@@ -102,6 +122,7 @@ public class FrostWyvernEntity extends TamableAnimal implements GeoEntity {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Saddled", isSaddled());
         tag.putFloat("Stamina", getStamina());
+        tag.putByte("WyvernVariant", getVariant());
     }
 
     @Override
@@ -109,6 +130,24 @@ public class FrostWyvernEntity extends TamableAnimal implements GeoEntity {
         super.readAdditionalSaveData(tag);
         setSaddled(tag.getBoolean("Saddled"));
         setStamina(tag.getFloat("Stamina"));
+        setVariant(tag.getByte("WyvernVariant"));
+    }
+
+    // ─── Random variant on first spawn ─────────────────────────────────────────
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+                                        MobSpawnType spawnType, @Nullable SpawnGroupData spawnData,
+                                        @Nullable CompoundTag dataTag) {
+        SpawnGroupData data = super.finalizeSpawn(level, difficulty, spawnType, spawnData, dataTag);
+        float roll = random.nextFloat();
+        byte variant;
+        if      (roll < 0.075f) variant = VARIANT_STORM;
+        else if (roll < 0.15f)  variant = VARIANT_BLIZZARD;
+        else if (roll < 0.25f)  variant = VARIANT_ELITE;
+        else if (roll < 0.50f)  variant = VARIANT_RARE;
+        else                    variant = VARIANT_COMMON;
+        setVariant(variant);
+        return data;
     }
 
     // ─── Goals ─────────────────────────────────────────────────────────────────
