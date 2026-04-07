@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="emberaether"
+version="${file.jarVersion}"
+displayName="EmberAether"
+authors="DarylU24"
+description='''
+Dragon mount mobs for Minecraft 1.16.5 Forge.
+'''
+
+[[dependencies.emberaether]]
+modId="forge"
+mandatory=true
+versionRange="[36,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.emberaether]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.5]"
+ordering="NONE"
+side="BOTH"
