@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+[[dependencies.emberaether]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47.2.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.emberaether]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.emberaether]]
+    modId="geckolib"
+    mandatory=true
+    versionRange="[4.3,)"
+    ordering="NONE"
+    side="BOTH"
+[[mods]]
+modId="emberaether"
+version="${file.jarVersion}"
+displayName="EmberAether"
+description='''A dragon mod featuring the Infernal Drake and Frost Wyvern.'''
+logoFile="emberaether.png"
+authors="EmberAether Team"
+[[mods.dependencies.geckolib]]

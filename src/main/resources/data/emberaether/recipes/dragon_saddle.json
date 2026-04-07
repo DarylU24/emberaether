@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LIL",
+    "IWI",
+    " L "
+  ],
+  "key": {
+    "L": { "item": "minecraft:leather" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "W": { "item": "minecraft:white_wool" }
+  },
+  "result": {
+    "item": "emberaether:dragon_saddle",
+    "count": 1
+  }
+}
