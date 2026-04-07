@@ -93,9 +93,7 @@ public abstract class AbstractDragonEntity extends AnimalEntity {
     @Override
     public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
         ILivingEntityData livingData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
-        if (this.random.nextBoolean()) {
-            this.setVariantIndex(this.random.nextInt(getVariants().length));
-        }
+        this.setVariantIndex(this.random.nextInt(getVariants().length));
         return livingData;
     }
 
