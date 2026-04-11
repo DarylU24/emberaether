@@ -6,377 +6,518 @@
         "identifier": "geometry.frost_wyvern",
         "texture_width": 128,
         "texture_height": 128,
-        "visible_bounds_width": 5,
-        "visible_bounds_height": 4,
-        "visible_bounds_offset": [0, 1.5, 0]
+        "visible_bounds_width": 8,
+        "visible_bounds_height": 6,
+        "visible_bounds_offset": [0, 2.2, 0]
       },
       "bones": [
-
         {
           "name": "root",
-          "pivot": [0, 0, 0]
+          "pivot": [0, 24, 0]
         },
-
         {
           "name": "body",
           "parent": "root",
-          "pivot": [0, 10, 0],
+          "pivot": [0, -12, 0],
           "cubes": [
             {
-              "comment": "Body 8×8×20 — UV(0,0) box 56×28 [Q1 TL]",
-              "origin": [-4, 6, -10],
-              "size": [8, 8, 20],
+              "origin": [-6, -18, -12],
+              "size": [12, 12, 24],
               "uv": [0, 0]
             }
           ]
         },
-
         {
-          "name": "neck_1",
+          "name": "chest",
           "parent": "body",
-          "pivot": [0, 14, -10],
-          "rotation": [-25, 0, 0],
+          "pivot": [0, -1, -8],
           "cubes": [
             {
-              "comment": "Neck-1 4×4×6 — UV(0,28) box 20×10 [Q1 TL]",
-              "origin": [-2, 14, -16],
-              "size": [4, 4, 6],
+              "origin": [-6.5, -19, -16],
+              "size": [13, 14, 8],
               "uv": [0, 28]
             }
           ]
         },
-
+        {
+          "name": "neck_1",
+          "parent": "chest",
+          "pivot": [0, -11, -15],
+          "rotation": [-24, 0, 0],
+          "cubes": [
+            {
+              "origin": [-3, -14, -23],
+              "size": [6, 6, 8],
+              "uv": [56, 0]
+            }
+          ]
+        },
         {
           "name": "neck_2",
           "parent": "neck_1",
-          "pivot": [0, 17, -15],
-          "rotation": [-20, 0, 0],
+          "pivot": [0, -11, -23],
+          "rotation": [-18, 0, 0],
           "cubes": [
             {
-              "comment": "Neck-2 4×4×6 — UV(20,28) box 20×10 [Q1 TL]",
-              "origin": [-2, 17, -21],
-              "size": [4, 4, 6],
-              "uv": [20, 28]
+              "origin": [-3, -14, -31],
+              "size": [6, 6, 8],
+              "uv": [56, 16]
             }
           ]
         },
-
         {
           "name": "neck_3",
           "parent": "neck_2",
-          "pivot": [0, 20, -20],
-          "rotation": [-15, 0, 0],
+          "pivot": [0, -10, -31],
+          "rotation": [-14, 0, 0],
           "cubes": [
             {
-              "comment": "Neck-3 4×4×6 — UV(40,28) box 20×10 [Q1 TL]",
-              "origin": [-2, 20, -26],
-              "size": [4, 4, 6],
-              "uv": [40, 28]
+              "origin": [-3, -13, -39],
+              "size": [6, 6, 8],
+              "uv": [56, 32]
             }
           ]
         },
-
         {
           "name": "neck_4",
           "parent": "neck_3",
-          "pivot": [0, 22.5, -25],
+          "pivot": [0, -9.5, -39],
           "rotation": [-10, 0, 0],
           "cubes": [
             {
-              "comment": "Neck-4 4×4×6 — UV(0,38) box 20×10 [Q1 TL]",
-              "origin": [-2, 22.5, -31],
-              "size": [4, 4, 6],
-              "uv": [0, 38]
+              "origin": [-3, -12.5, -47],
+              "size": [6, 6, 8],
+              "uv": [56, 48]
             }
           ]
         },
-
         {
           "name": "head",
           "parent": "neck_4",
-          "pivot": [0, 25, -30],
+          "pivot": [0, -9, -46],
+          "rotation": [4, 0, 0],
           "cubes": [
             {
-              "comment": "Head 6×6×8 — UV(0,48) box 28×14 [Q1 TL]",
-              "origin": [-3, 23, -38],
-              "size": [6, 6, 8],
-              "uv": [0, 48]
+              "origin": [-4, -13, -58],
+              "size": [8, 8, 12],
+              "uv": [0, 72]
             }
           ]
         },
-
         {
           "name": "snout",
           "parent": "head",
-          "pivot": [0, 25, -34],
+          "pivot": [0, -10, -56],
           "cubes": [
             {
-              "comment": "V-snout 3×2×5 — UV(28,48) box 16×7 [Q1 TL]",
-              "origin": [-1.5, 23, -39],
-              "size": [3, 2, 5],
-              "uv": [28, 48]
+              "origin": [-2, -12, -62],
+              "size": [4, 3, 6],
+              "uv": [42, 72]
             }
           ]
         },
-
         {
-          "name": "back_leg_l",
-          "parent": "body",
-          "pivot": [-4, 10, 4],
+          "name": "crest_l",
+          "parent": "head",
+          "pivot": [-2, -6, -50],
+          "rotation": [-12, 0, 20],
           "cubes": [
             {
-              "comment": "Back-upper-leg-L 4×10×4 — UV(0,64) box 16×14 [Q3 BL]",
-              "origin": [-8, 0, 2],
-              "size": [4, 10, 4],
-              "uv": [0, 64]
+              "origin": [-2.5, -12, -51],
+              "size": [1, 6, 2],
+              "uv": [96, 0]
             }
           ]
         },
-
         {
-          "name": "back_lower_leg_l",
-          "parent": "back_leg_l",
-          "pivot": [-6, 0, 4],
-          "cubes": [
-            {
-              "comment": "Back-lower-leg-L 3×6×3 — UV(16,64) box 12×9 [Q3 BL]",
-              "origin": [-8, -6, 2.5],
-              "size": [3, 6, 3],
-              "uv": [16, 64]
-            }
-          ]
-        },
-
-        {
-          "name": "back_leg_r",
-          "parent": "body",
-          "pivot": [4, 10, 4],
+          "name": "crest_r",
+          "parent": "head",
+          "pivot": [2, -6, -50],
+          "rotation": [-12, 0, -20],
           "mirror": true,
           "cubes": [
             {
-              "comment": "Back-upper-leg-R 4×10×4 — UV(0,64) mirror [Q3 BL]",
-              "origin": [4, 0, 2],
-              "size": [4, 10, 4],
-              "uv": [0, 64],
+              "origin": [1.5, -12, -51],
+              "size": [1, 6, 2],
+              "uv": [96, 0],
               "mirror": true
             }
           ]
         },
-
         {
-          "name": "back_lower_leg_r",
-          "parent": "back_leg_r",
-          "pivot": [6, 0, 4],
-          "mirror": true,
-          "cubes": [
-            {
-              "comment": "Back-lower-leg-R 3×6×3 — UV(16,64) mirror [Q3 BL]",
-              "origin": [5, -6, 2.5],
-              "size": [3, 6, 3],
-              "uv": [16, 64],
-              "mirror": true
-            }
-          ]
-        },
-
-        {
-          "name": "tail_1",
-          "parent": "body",
-          "pivot": [0, 9, 10],
-          "rotation": [12, 0, 0],
-          "cubes": [
-            {
-              "comment": "Tail-1 3×3×6 — UV(0,78) box 18×9 [Q3 BL]",
-              "origin": [-1.5, 7.5, 10],
-              "size": [3, 3, 6],
-              "uv": [0, 78]
-            }
-          ]
-        },
-
-        {
-          "name": "tail_2",
-          "parent": "tail_1",
-          "pivot": [0, 9, 16],
-          "rotation": [12, 0, 0],
-          "cubes": [
-            {
-              "comment": "Tail-2 3×3×6 — UV(18,78) box 18×9 [Q3 BL]",
-              "origin": [-1.5, 7.5, 16],
-              "size": [3, 3, 6],
-              "uv": [18, 78]
-            }
-          ]
-        },
-
-        {
-          "name": "tail_3",
-          "parent": "tail_2",
-          "pivot": [0, 9, 22],
-          "rotation": [10, 0, 0],
-          "cubes": [
-            {
-              "comment": "Tail-3 3×3×5 — UV(36,78) box 16×8 [Q3 BL]",
-              "origin": [-1.5, 7.5, 22],
-              "size": [3, 3, 5],
-              "uv": [36, 78]
-            }
-          ]
-        },
-
-        {
-          "name": "tail_4",
-          "parent": "tail_3",
-          "pivot": [0, 9, 27],
+          "name": "front_limb_l",
+          "parent": "chest",
+          "pivot": [-4.5, -7, -8],
           "rotation": [8, 0, 0],
           "cubes": [
             {
-              "comment": "Tail-4 2×2×5 — UV(0,87) box 14×7 [Q3 BL]",
-              "origin": [-1, 8, 27],
-              "size": [2, 2, 5],
-              "uv": [0, 87]
+              "origin": [-6, -11, -10],
+              "size": [3, 5, 3],
+              "uv": [76, 72]
             }
           ]
         },
-
+        {
+          "name": "front_limb_r",
+          "parent": "chest",
+          "pivot": [4.5, -7, -8],
+          "rotation": [8, 0, 0],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [3, -11, -10],
+              "size": [3, 5, 3],
+              "uv": [76, 72],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "back_leg_l",
+          "parent": "body",
+          "pivot": [-4.5, -9, 7],
+          "rotation": [-4, 0, 0],
+          "cubes": [
+            {
+              "origin": [-7.5, -21, 4],
+              "size": [6, 12, 6],
+              "uv": [0, 92]
+            }
+          ]
+        },
+        {
+          "name": "back_lower_leg_l",
+          "parent": "back_leg_l",
+          "pivot": [-4.5, -21, 7],
+          "cubes": [
+            {
+              "origin": [-7, -31, 4.5],
+              "size": [5, 10, 5],
+              "uv": [24, 92]
+            }
+          ]
+        },
+        {
+          "name": "back_foot_l",
+          "parent": "back_lower_leg_l",
+          "pivot": [-4.5, -31, 7],
+          "cubes": [
+            {
+              "origin": [-7.5, -34, 1],
+              "size": [6, 3, 8],
+              "uv": [46, 92]
+            }
+          ]
+        },
+        {
+          "name": "back_leg_r",
+          "parent": "body",
+          "pivot": [4.5, -9, 7],
+          "rotation": [-4, 0, 0],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [1.5, -21, 4],
+              "size": [6, 12, 6],
+              "uv": [0, 92],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "back_lower_leg_r",
+          "parent": "back_leg_r",
+          "pivot": [4.5, -21, 7],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [2, -31, 4.5],
+              "size": [5, 10, 5],
+              "uv": [24, 92],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "back_foot_r",
+          "parent": "back_lower_leg_r",
+          "pivot": [4.5, -31, 7],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [1.5, -34, 1],
+              "size": [6, 3, 8],
+              "uv": [46, 92],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "tail_1",
+          "parent": "body",
+          "pivot": [0, -12, 12],
+          "rotation": [10, 0, 0],
+          "cubes": [
+            {
+              "origin": [-3, -15, 12],
+              "size": [6, 6, 8],
+              "uv": [72, 16]
+            }
+          ]
+        },
+        {
+          "name": "tail_2",
+          "parent": "tail_1",
+          "pivot": [0, -12.5, 20],
+          "rotation": [10, 0, 0],
+          "cubes": [
+            {
+              "origin": [-2.5, -15, 20],
+              "size": [5, 5, 8],
+              "uv": [72, 32]
+            }
+          ]
+        },
+        {
+          "name": "tail_3",
+          "parent": "tail_2",
+          "pivot": [0, -13, 28],
+          "rotation": [8, 0, 0],
+          "cubes": [
+            {
+              "origin": [-2.5, -15.5, 28],
+              "size": [5, 5, 7],
+              "uv": [72, 46]
+            }
+          ]
+        },
+        {
+          "name": "tail_4",
+          "parent": "tail_3",
+          "pivot": [0, -13.5, 35],
+          "rotation": [7, 0, 0],
+          "cubes": [
+            {
+              "origin": [-2, -15.5, 35],
+              "size": [4, 4, 7],
+              "uv": [72, 60]
+            }
+          ]
+        },
         {
           "name": "tail_5",
           "parent": "tail_4",
-          "pivot": [0, 9, 32],
+          "pivot": [0, -14, 42],
           "rotation": [6, 0, 0],
           "cubes": [
             {
-              "comment": "Tail-5 2×2×4 — UV(14,87) box 12×6 [Q3 BL]",
-              "origin": [-1, 8, 32],
-              "size": [2, 2, 4],
-              "uv": [14, 87]
+              "origin": [-2, -16, 42],
+              "size": [4, 4, 6],
+              "uv": [72, 72]
             }
           ]
         },
-
         {
           "name": "tail_6",
           "parent": "tail_5",
-          "pivot": [0, 8.5, 36],
+          "pivot": [0, -14.5, 48],
           "rotation": [5, 0, 0],
           "cubes": [
             {
-              "comment": "Tail-6 2×2×4 — UV(26,87) box 12×6 [Q3 BL]",
-              "origin": [-1, 7.5, 36],
-              "size": [2, 2, 4],
-              "uv": [26, 87]
+              "origin": [-1.5, -16, 48],
+              "size": [3, 3, 6],
+              "uv": [72, 84]
             }
           ]
         },
-
         {
-          "name": "wing_upper_arm_l",
-          "parent": "body",
-          "pivot": [-4, 14, -4],
-          "rotation": [0, 0, -30],
+          "name": "tail_7",
+          "parent": "tail_6",
+          "pivot": [0, -15, 54],
+          "rotation": [5, 0, 0],
           "cubes": [
             {
-              "comment": "Wing-upper-arm-L 4×12×4 — UV(64,0) box 16×16 [Q2 TR]",
-              "origin": [-8, 14, -6],
-              "size": [4, 12, 4],
-              "uv": [64, 0]
+              "origin": [-1.5, -16.5, 54],
+              "size": [3, 3, 5],
+              "uv": [72, 94]
             }
           ]
         },
-
+        {
+          "name": "tail_tip_fin",
+          "parent": "tail_7",
+          "pivot": [0, -15.5, 59],
+          "rotation": [8, 0, 0],
+          "cubes": [
+            {
+              "origin": [-0.5, -18.5, 59],
+              "size": [1, 6, 5],
+              "uv": [72, 104]
+            }
+          ]
+        },
+        {
+          "name": "wing_upper_arm_l",
+          "parent": "chest",
+          "pivot": [-6.5, -10, -11],
+          "rotation": [0, 12, -22],
+          "cubes": [
+            {
+              "origin": [-8.5, -26, -13],
+              "size": [4, 16, 4],
+              "uv": [88, 0]
+            }
+          ]
+        },
         {
           "name": "wing_forearm_l",
           "parent": "wing_upper_arm_l",
-          "pivot": [-8, 14, -4],
-          "rotation": [0, 0, -20],
+          "pivot": [-8.5, -26, -11],
+          "rotation": [0, 10, -12],
           "cubes": [
             {
-              "comment": "Wing-forearm-L 3×10×3 — UV(80,0) box 12×13 [Q2 TR]",
-              "origin": [-11, 14, -5.5],
-              "size": [3, 10, 3],
-              "uv": [80, 0]
+              "origin": [-10, -44, -12.5],
+              "size": [3, 18, 3],
+              "uv": [88, 22]
             }
           ]
         },
-
         {
-          "name": "wing_membrane_l",
+          "name": "wing_tip_l",
           "parent": "wing_forearm_l",
-          "pivot": [-11, 18, -4],
+          "pivot": [-10, -44, -11],
+          "rotation": [0, 8, -8],
           "cubes": [
             {
-              "comment": "Wing-membrane-L 18×1×20 — per-face UV [Q2 TR] — no box-UV overlap",
-              "origin": [-29, 17.5, -14],
-              "size": [18, 1, 20],
-              "uv": {
-                "up":    { "uv": [64, 16], "uv_size": [18, 20] },
-                "down":  { "uv": [82, 16], "uv_size": [18, 20] },
-                "north": { "uv": [64, 36], "uv_size": [18,  1] },
-                "south": { "uv": [82, 36], "uv_size": [18,  1] },
-                "east":  { "uv": [100, 16], "uv_size": [ 1, 20] },
-                "west":  { "uv": [101, 16], "uv_size": [ 1, 20] }
-              }
+              "origin": [-11, -64, -12],
+              "size": [2, 20, 2],
+              "uv": [88, 46]
             }
           ]
         },
-
+        {
+          "name": "wing_membrane_inner_l",
+          "parent": "wing_upper_arm_l",
+          "rotation": [0, 0, 4],
+          "cubes": [
+            {
+              "origin": [-20, -24, -13],
+              "size": [13, 1, 20],
+              "uv": [96, 16]
+            }
+          ]
+        },
+        {
+          "name": "wing_membrane_mid_l",
+          "parent": "wing_forearm_l",
+          "rotation": [0, 0, 3],
+          "cubes": [
+            {
+              "origin": [-25, -41, -12],
+              "size": [15, 1, 22],
+              "uv": [96, 40]
+            }
+          ]
+        },
+        {
+          "name": "wing_membrane_tip_l",
+          "parent": "wing_tip_l",
+          "rotation": [0, 0, 2],
+          "cubes": [
+            {
+              "origin": [-29, -61, -11],
+              "size": [17, 1, 24],
+              "uv": [96, 66]
+            }
+          ]
+        },
         {
           "name": "wing_upper_arm_r",
-          "parent": "body",
-          "pivot": [4, 14, -4],
-          "rotation": [0, 0, 30],
+          "parent": "chest",
+          "pivot": [6.5, -10, -11],
+          "rotation": [0, -12, 22],
           "mirror": true,
           "cubes": [
             {
-              "comment": "Wing-upper-arm-R 4×12×4 — UV(64,0) mirror [Q2 TR]",
-              "origin": [4, 14, -6],
-              "size": [4, 12, 4],
-              "uv": [64, 0],
+              "origin": [4.5, -26, -13],
+              "size": [4, 16, 4],
+              "uv": [88, 0],
               "mirror": true
             }
           ]
         },
-
         {
           "name": "wing_forearm_r",
           "parent": "wing_upper_arm_r",
-          "pivot": [8, 14, -4],
-          "rotation": [0, 0, 20],
+          "pivot": [8.5, -26, -11],
+          "rotation": [0, -10, 12],
           "mirror": true,
           "cubes": [
             {
-              "comment": "Wing-forearm-R 3×10×3 — UV(80,0) mirror [Q2 TR]",
-              "origin": [8, 14, -5.5],
-              "size": [3, 10, 3],
-              "uv": [80, 0],
+              "origin": [7, -44, -12.5],
+              "size": [3, 18, 3],
+              "uv": [88, 22],
               "mirror": true
             }
           ]
         },
-
         {
-          "name": "wing_membrane_r",
+          "name": "wing_tip_r",
           "parent": "wing_forearm_r",
-          "pivot": [11, 18, -4],
+          "pivot": [10, -44, -11],
+          "rotation": [0, -8, 8],
           "mirror": true,
           "cubes": [
             {
-              "comment": "Wing-membrane-R 18×1×20 — per-face UV mirror [Q2 TR] — no overlap",
-              "origin": [11, 17.5, -14],
-              "size": [18, 1, 20],
-              "uv": {
-                "up":    { "uv": [64, 16], "uv_size": [18, 20] },
-                "down":  { "uv": [82, 16], "uv_size": [18, 20] },
-                "north": { "uv": [64, 36], "uv_size": [18,  1] },
-                "south": { "uv": [82, 36], "uv_size": [18,  1] },
-                "east":  { "uv": [100, 16], "uv_size": [ 1, 20] },
-                "west":  { "uv": [101, 16], "uv_size": [ 1, 20] }
-              },
+              "origin": [9, -64, -12],
+              "size": [2, 20, 2],
+              "uv": [88, 46],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "wing_membrane_inner_r",
+          "parent": "wing_upper_arm_r",
+          "rotation": [0, 0, -4],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [7, -24, -13],
+              "size": [13, 1, 20],
+              "uv": [96, 16],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "wing_membrane_mid_r",
+          "parent": "wing_forearm_r",
+          "rotation": [0, 0, -3],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [10, -41, -12],
+              "size": [15, 1, 22],
+              "uv": [96, 40],
+              "mirror": true
+            }
+          ]
+        },
+        {
+          "name": "wing_membrane_tip_r",
+          "parent": "wing_tip_r",
+          "rotation": [0, 0, -2],
+          "mirror": true,
+          "cubes": [
+            {
+              "origin": [12, -61, -11],
+              "size": [17, 1, 24],
+              "uv": [96, 66],
               "mirror": true
             }
           ]
         }
-
       ]
     }
   ]
